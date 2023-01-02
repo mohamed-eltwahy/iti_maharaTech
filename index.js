@@ -5,6 +5,13 @@ const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const ejs = require('ejs');
 const studentsRouter= require("./routes/students");
+const mongoose=require('mongoose');
+
+mongoose.connect("mongodb://localhost:27017/", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    // usecreateIndexes:true
+}).then(() => { console.log("connect to DB ...") }).catch((err) => { console.log(err) });
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
