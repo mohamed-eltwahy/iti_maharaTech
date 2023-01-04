@@ -1,14 +1,18 @@
 const express = require('express');
 const router=express.Router();
 const validator=require('../util/studentsValidator');
-const getallStudentsController=require('../controllers/studentsController');
+const getallStudentsController=require('../controllers/studentControllerDB');
 
 
 
-router.get('/:id',getallStudentsController.getStudentsID);
+router.get('/:id',getallStudentsController.getStudentById);
 // router.set("template engine ", "ejs");
 
 router.get('/', getallStudentsController.getAllStudents);
+
+router.delete('/:id', getallStudentsController.deleteStudentById);
+
+router.put('/:id', getallStudentsController.updateStudent);
 
 ///create student
 
