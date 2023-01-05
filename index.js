@@ -6,8 +6,9 @@ const helmet = require('helmet');
 const ejs = require('ejs');
 const studentsRouter= require("./routes/students");
 const mongoose=require('mongoose');
-
-mongoose.connect("mongodb://localhost:27017/", {
+const userRouter =require('./routes/user');
+const authRouter=require("./routes/auth");
+mongoose.connect("mongodb://localhost:27017/iti", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     // usecreateIndexes:true
@@ -20,6 +21,8 @@ app.use(cookieParser());
 app.use(helmet());
 
 app.use("/api/Students",studentsRouter);
+app.use('/api/Users',userRouter);
+app.use('/api/login',authRouter);
 
 const logging= require('./middlewares/logging');
 

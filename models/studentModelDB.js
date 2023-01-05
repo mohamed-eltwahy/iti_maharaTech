@@ -1,7 +1,7 @@
 //require mongoose
 const mongoose = require("mongoose");
 //set connection
-
+mongoose.set('strictQuery', true);
 
 //create schema
 const studentSchema2=new mongoose.Schema({
