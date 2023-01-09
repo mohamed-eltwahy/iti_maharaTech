@@ -3,8 +3,9 @@ const router = express.Router();
 const validator = require("../middlewares/authMWValidator");
 const { User } = require('../models/userModel');
 const bcrypt = require('bcrypt');
-const config=require('config');
-const jwt = require('jsonwebtoken');
+
+
+
 router.post('/', validator, async (req, res) => {
     //check email
     let user = await User.findOne({ email: req.body.email }).exec();
@@ -16,12 +17,11 @@ router.post('/', validator, async (req, res) => {
     const validPassword = await bcrypt.compare(req.body.password, user.password);
 
     if (!validPassword) return res.status(400).send("invalid email or password...");
+    // if(!config.get("jwtsec")) return res.status(500).send("Token not defined ...");
+    // const token = user.generateAuthToken();
+    // res.header("x-auth-token",token);
 
-    const token=jwt.sign({usrid:user._id},config.get("jwtsec"));
 
-    //send response
-
-    res.header("x-auth-token",  );
 
     res.status(200).send("logged in successful");
 });

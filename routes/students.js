@@ -2,7 +2,7 @@ const express = require('express');
 const router=express.Router();
 const validator=require('../util/studentsValidator');
 const getallStudentsController=require('../controllers/studentControllerDB');
-
+const auth=require("../middlewares/authMW");
 
 
 router.get('/:id',getallStudentsController.getStudentById);
@@ -10,7 +10,7 @@ router.get('/:id',getallStudentsController.getStudentById);
 
 router.get('/', getallStudentsController.getAllStudents);
 
-router.delete('/:id', getallStudentsController.deleteStudentById);
+router.delete('/:id',auth, getallStudentsController.deleteStudentById);
 
 router.put('/:id', getallStudentsController.updateStudent);
 

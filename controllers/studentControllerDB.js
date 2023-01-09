@@ -1,25 +1,21 @@
 const Student = require('../models/studentModelDB');
+const asyncFunction = require('../middlewares/async');
 
 
 //create student
 
-let addNewStudent = (req, res) => {
+let addNewStudent = (req, res,nxt) => {
     let std = new Student({
         fn: req.body.fn, ln: req.body.ln, dept: req.body.dept, id: req.body.id
     });
     std.save().then((data) => { res.status(200).send(data) }).catch((err) => {
-
-        for (let e in err.errors) {
-            console.log(err.errors[e].message);
-            res.status(400).send('Bad request');
-        }
-
+        nxt(err);
     })
 }
 
 //getStudentById
 
-let getStudentById = async (req, res) => {
+let getStudentById = async (req, res,next) => {
     try {
         let std = await Student.findById(req.params.id);
 
@@ -27,18 +23,19 @@ let getStudentById = async (req, res) => {
 
         res.send(std);
     } catch (err) {
-        console.log(err.toString());
+        // console.log(err.toString());
+        next(err);
     }
 }
 
 //getAllStudents
-let getAllStudents = async (req, res) => {
+let getAllStudents = asyncFunction(async (req, res) => {
 
     let std = await Student.find().select({ fn: 1, ln: 1, id1 }).sort({ id: -1 });
 
     res.send(std);
 
-}
+})
 
 //updateStudents
 let updateStudent = async (req, res) => {
